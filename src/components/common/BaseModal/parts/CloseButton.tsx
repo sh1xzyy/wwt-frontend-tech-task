@@ -1,11 +1,11 @@
-interface CloseButtonProps {
-	setIsModalOpen: (a: boolean) => void
-}
+import clsx from 'clsx'
 
-const CloseButton = ({ setIsModalOpen }: CloseButtonProps) => {
+import { CloseButtonProps } from '../types'
+
+const CloseButton = ({ setIsModalOpen, styles }: CloseButtonProps) => {
 	return (
 		<button
-			className="absolute top-[52px] right-[33px]"
+			className={clsx('absolute right-[33px]', styles)}
 			type="button"
 			onClick={() => setIsModalOpen(false)}
 			aria-label="close modal button"

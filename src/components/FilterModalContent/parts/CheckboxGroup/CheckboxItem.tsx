@@ -1,14 +1,22 @@
 import { ItemProps } from '../../types'
 
-const CheckboxItem = ({ data: { label, name } }: ItemProps) => {
+const CheckboxItem = ({
+	data: { label, name, checked },
+	index,
+	onChange
+}: ItemProps) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		onChange(index, e.target.checked)
+	}
 	return (
 		<li>
-			<label className="flex items-center cursor-pointer gap-[16px] group">
+			<label className="inline-flex items-center cursor-pointer gap-[16px] group">
 				<input
 					className="visually-hidden"
 					type="checkbox"
 					name={name}
-					onChange={e => console.log(e.target.checked)}
+					checked={checked}
+					onChange={handleChange}
 				/>
 				<div className="relative rounded-[4px] group-has-[:checked]:bg-[#31393c] transition linear duration-[250ms]">
 					<span className="flex w-[20px] h-[20px] border-2 rounded-[4px]"></span>

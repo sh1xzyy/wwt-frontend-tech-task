@@ -1,14 +1,16 @@
 import clsx from 'clsx'
 
-import Line from '@/common/Line/Line'
-
+import Line from '../../../common/Line/Line'
 import { GroupProps } from '../../types'
 import CheckboxList from './CheckboxList'
 
-const CheckboxGroup = ({ data: { title, filter, index } }: GroupProps) => {
+const CheckboxGroup = ({
+	data: { title, filter, index },
+	onChange
+}: GroupProps) => {
 	return (
-		<>
-			<li
+		<li>
+			<div
 				className={clsx(
 					index !== 0 && 'mt-[32px]',
 					index === 0 && 'mt-[64px] mb-[32px]',
@@ -25,10 +27,13 @@ const CheckboxGroup = ({ data: { title, filter, index } }: GroupProps) => {
 				<span className="block font-medium text-[24px] text-[#31393c] mb-[24px]">
 					{title}
 				</span>
-				<CheckboxList filters={filter} />
-			</li>
+				<CheckboxList
+					filters={filter}
+					onChange={onChange}
+				/>
+			</div>
 			<Line />
-		</>
+		</li>
 	)
 }
 
