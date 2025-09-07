@@ -1,22 +1,56 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import ActionButton from '@/common/ActionButton/ActionButton'
-import BaseModal from '@/common/BaseModal/BaseModal'
+import clsx from 'clsx'
 
-import FilterModal from '../../../components/FilterModal/FilterModal'
+import { useConfirmModalContext } from '@/context/useConfirmModalContext/useConfirmModalContext'
+import { globalFilter } from '@/data/filters'
+import { useFiltersQuery } from '@/hooks/useFiltersQuery'
+
+import ConfirmModalContent from '../../../components/ConfirmModalContent/ConfirmModalContent'
+import FilterModalContent from '../../../components/FilterModalContent/FilterModalContent'
+import { CheckboxFilterGroup } from '../../../components/FilterModalContent/types'
+import ActionButton from '../../../components/common/ActionButton/ActionButton'
+import BaseModal from '../../../components/common/BaseModal/BaseModal'
+import Loader from '../../../components/common/Loader/Loader'
 
 export const App = () => {
 	const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false)
+	const { isConfirmModalOpen, setIsConfirmModalOpen } = useConfirmModalContext()
+	const [filters, setFilters] = useState<CheckboxFilterGroup[]>(globalFilter)
 	const { t } = useTranslation()
+	const { data, isLoading } = useFiltersQuery()
 
-	console.log(isFilterModalOpen)
+	console.log(data)
+
+	if (isLoading) {
+		return <Loader />
+	}
 
 	return (
-		<>
+		<div
+			className={clsx(
+				(isFilterModalOpen || isConfirmModalOpen) && 'overflow-hidden h-screen'
+			)}
+		>
 			{isFilterModalOpen && (
-				<BaseModal setIsModalOpen={setIsFilterModalOpen}>
-					<FilterModal setIsFilterModalOpen={setIsFilterModalOpen} />
+				<BaseModal
+					styles="px-[34px] py-[40px]"
+					closeButtonStyles="top-[52px]"
+					setIsModalOpen={setIsFilterModalOpen}
+				>
+					<FilterModalContent setFilters={setFilters} />
+				</BaseModal>
+			)}
+			{isConfirmModalOpen && (
+				<BaseModal
+					styles="py-[32px] px-[32px]"
+					closeButtonStyles="top-[44px]"
+					setIsModalOpen={setIsConfirmModalOpen}
+				>
+					<ConfirmModalContent
+						onConfirm={() => console.log('Confirmed', filters)}
+					/>
 				</BaseModal>
 			)}
 			<section className="w-full h-dvh flex items-center justify-center">
@@ -25,11 +59,12 @@ export const App = () => {
 						{t('winwin_frontend_test_task')}
 					</h1>
 					<ActionButton
+						styles="min-w-[184px] bg-[#ff5f00] text-[#fff] hover:bg-[#da5102]"
 						title={t('open_modal')}
-						setIsModalOpen={setIsFilterModalOpen}
+						func={() => setIsFilterModalOpen(true)}
 					/>
 				</div>
 			</section>
-		</>
+		</div>
 	)
 }
