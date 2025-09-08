@@ -8,12 +8,14 @@ import { globalFilter } from '@/data/filters'
 import { useFiltersQuery } from '@/hooks/useFiltersQuery'
 
 import ConfirmModalContent from '../../../components/ConfirmModalContent/ConfirmModalContent'
+import DataList from '../../../components/DataList/DataList'
 import FilterModalContent from '../../../components/FilterModalContent/FilterModalContent'
 import { CheckboxFilterGroup } from '../../../components/FilterModalContent/types'
 import ActionButton from '../../../components/common/ActionButton/ActionButton'
 import BaseModal from '../../../components/common/BaseModal/BaseModal'
 import Container from '../../../components/common/Container/Container'
 import Loader from '../../../components/common/Loader/Loader'
+import { getFilteredArray } from '../../../utils/app/getFilteredArray'
 
 export const App = () => {
 	const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false)
@@ -21,8 +23,6 @@ export const App = () => {
 	const [filters, setFilters] = useState<CheckboxFilterGroup[]>(globalFilter)
 	const { t } = useTranslation()
 	const { data, isLoading } = useFiltersQuery()
-
-	console.log(data)
 
 	if (isLoading) {
 		return <Loader />
@@ -54,7 +54,7 @@ export const App = () => {
 					/>
 				</BaseModal>
 			)}
-			<section className="w-full h-dvh flex items-center justify-center">
+			<section className="w-full h-dvh flex items-center">
 				<Container>
 					<div className="flex flex-col items-center gap-[50px]">
 						<h1 className="text-6xl text-gray-600">
@@ -68,6 +68,14 @@ export const App = () => {
 					</div>
 				</Container>
 			</section>
+
+			{data && (
+				<section className="py-[40px]">
+					<Container>
+						<DataList data={getFilteredArray(data?.filterItems)} />
+					</Container>
+				</section>
+			)}
 		</div>
 	)
 }
