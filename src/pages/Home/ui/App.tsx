@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import clsx from 'clsx'
 
 import { useConfirmModalContext } from '@/context/useConfirmModalContext/useConfirmModalContext'
-import { globalFilter } from '@/data/filters'
+import { globalFilter } from '@/filtersData/filters'
 import { useFiltersQuery } from '@/hooks/useFiltersQuery'
 
 import ConfirmModalContent from '../../../components/ConfirmModalContent/ConfirmModalContent'
@@ -21,8 +21,15 @@ export const App = () => {
 	const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false)
 	const { isConfirmModalOpen, setIsConfirmModalOpen } = useConfirmModalContext()
 	const [filters, setFilters] = useState<CheckboxFilterGroup[]>(globalFilter)
-	const { t } = useTranslation()
 	const { data, isLoading } = useFiltersQuery()
+	const { t } = useTranslation()
+
+	const handleSubmit = async (e: FormEvent): Promise<void> => {
+		e.preventDefault()
+		localStorage.setItem('filters', JSON.stringify(filters))
+		setIsConfirmModalOpen(false)
+		setIsFilterModalOpen(false)
+	}
 
 	if (isLoading) {
 		return <Loader />
@@ -43,18 +50,17 @@ export const App = () => {
 					<FilterModalContent setFilters={setFilters} />
 				</BaseModal>
 			)}
+
 			{isConfirmModalOpen && (
 				<BaseModal
 					styles="py-[32px] px-[32px]"
 					closeButtonStyles="top-[44px]"
 					setIsModalOpen={setIsConfirmModalOpen}
 				>
-					<ConfirmModalContent
-						onConfirm={() => console.log('Confirmed', filters)}
-						filters={filters}
-					/>
+					<ConfirmModalContent handleSubmit={handleSubmit} />
 				</BaseModal>
 			)}
+
 			<section className="w-full h-dvh flex items-center">
 				<Container>
 					<div className="flex flex-col items-center gap-[50px]">
