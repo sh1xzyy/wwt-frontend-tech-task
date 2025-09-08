@@ -11,8 +11,35 @@ import { CheckboxFilterGroup, onChangeInterface } from './types'
 
 const FilterModalContent = ({ setFilters }: onChangeInterface) => {
 	const { setIsConfirmModalOpen } = useConfirmModalContext()
-	const [selectedFilters, setSelectedFilters] =
-		useState<CheckboxFilterGroup[]>(globalFilter)
+	const [selectedFilters, setSelectedFilters] = useState<CheckboxFilterGroup[]>(
+		() => {
+			const stored = localStorage.getItem('filters')
+			if (!stored) {
+				return globalFilter
+			}
+
+			const checkedGroups: CheckboxFilterGroup[] = JSON.parse(stored)
+
+			return globalFilter.map(group => {
+				const checkedGroup = checkedGroups.find(cg => cg.title === group.title)
+				if (!checkedGroup) {
+					return group
+				}
+
+				return {
+					...group,
+					filter: group.filter.map(item => {
+						const checkedItem = checkedGroup.filter.find(
+							i => i.name === item.name && i.checked
+						)
+						return checkedItem
+							? { ...item, checked: true }
+							: { ...item, checked: false }
+					})
+				}
+			})
+		}
+	)
 	const { t } = useTranslation()
 
 	const handleCheckboxChange = (
@@ -45,6 +72,7 @@ const FilterModalContent = ({ setFilters }: onChangeInterface) => {
 
 	const handleClearAll = () => {
 		setSelectedFilters(globalFilter)
+		localStorage.setItem('filters', JSON.stringify([]))
 		setFilters([])
 	}
 

@@ -51,6 +51,7 @@ export const App = () => {
 				>
 					<ConfirmModalContent
 						onConfirm={() => console.log('Confirmed', filters)}
+						filters={filters}
 					/>
 				</BaseModal>
 			)}
