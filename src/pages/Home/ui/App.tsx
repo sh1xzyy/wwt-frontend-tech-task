@@ -12,6 +12,7 @@ import FilterModalContent from '../../../components/FilterModalContent/FilterMod
 import { CheckboxFilterGroup } from '../../../components/FilterModalContent/types'
 import ActionButton from '../../../components/common/ActionButton/ActionButton'
 import BaseModal from '../../../components/common/BaseModal/BaseModal'
+import Container from '../../../components/common/Container/Container'
 import Loader from '../../../components/common/Loader/Loader'
 
 export const App = () => {
@@ -54,16 +55,18 @@ export const App = () => {
 				</BaseModal>
 			)}
 			<section className="w-full h-dvh flex items-center justify-center">
-				<div className="flex flex-col items-center">
-					<h1 className="text-6xl text-gray-600 mb-12">
-						{t('winwin_frontend_test_task')}
-					</h1>
-					<ActionButton
-						styles="min-w-[184px] bg-[#ff5f00] text-[#fff] hover:bg-[#da5102]"
-						title={t('open_modal')}
-						func={() => setIsFilterModalOpen(true)}
-					/>
-				</div>
+				<Container>
+					<div className="flex flex-col items-center gap-[50px]">
+						<h1 className="text-6xl text-gray-600">
+							{t('winwin_frontend_test_task')}
+						</h1>
+						<ActionButton
+							styles="min-w-[184px] bg-[#ff5f00] text-[#fff] hover:bg-[#da5102]"
+							title={t('open_modal')}
+							func={() => setIsFilterModalOpen(true)}
+						/>
+					</div>
+				</Container>
 			</section>
 		</div>
 	)
