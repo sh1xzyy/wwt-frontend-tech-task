@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 export const useCloseModalByKeydown = (
-	setIsModalOpen: (a: boolean) => void
+	setIsModalOpen: (value: boolean) => void
 ) => {
 	useEffect(() => {
 		const handleEscapeClick = (e: KeyboardEvent): void => {

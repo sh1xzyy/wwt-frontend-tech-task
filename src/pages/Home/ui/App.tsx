@@ -1,27 +1,35 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import clsx from 'clsx'
 
 import { useConfirmModalContext } from '@/context/useConfirmModalContext/useConfirmModalContext'
-import { globalFilter } from '@/data/filters'
+import { globalFilter } from '@/filtersData/filters'
 import { useFiltersQuery } from '@/hooks/useFiltersQuery'
 
 import ConfirmModalContent from '../../../components/ConfirmModalContent/ConfirmModalContent'
+import DataList from '../../../components/DataList/DataList'
 import FilterModalContent from '../../../components/FilterModalContent/FilterModalContent'
 import { CheckboxFilterGroup } from '../../../components/FilterModalContent/types'
 import ActionButton from '../../../components/common/ActionButton/ActionButton'
 import BaseModal from '../../../components/common/BaseModal/BaseModal'
+import Container from '../../../components/common/Container/Container'
 import Loader from '../../../components/common/Loader/Loader'
+import { getFilteredArray } from '../../../utils/app/getFilteredArray'
 
 export const App = () => {
 	const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false)
 	const { isConfirmModalOpen, setIsConfirmModalOpen } = useConfirmModalContext()
 	const [filters, setFilters] = useState<CheckboxFilterGroup[]>(globalFilter)
-	const { t } = useTranslation()
 	const { data, isLoading } = useFiltersQuery()
+	const { t } = useTranslation()
 
-	console.log(data)
+	const handleSubmit = async (e: FormEvent): Promise<void> => {
+		e.preventDefault()
+		localStorage.setItem('filters', JSON.stringify(filters))
+		setIsConfirmModalOpen(false)
+		setIsFilterModalOpen(false)
+	}
 
 	if (isLoading) {
 		return <Loader />
@@ -42,29 +50,39 @@ export const App = () => {
 					<FilterModalContent setFilters={setFilters} />
 				</BaseModal>
 			)}
+
 			{isConfirmModalOpen && (
 				<BaseModal
 					styles="py-[32px] px-[32px]"
 					closeButtonStyles="top-[44px]"
 					setIsModalOpen={setIsConfirmModalOpen}
 				>
-					<ConfirmModalContent
-						onConfirm={() => console.log('Confirmed', filters)}
-					/>
+					<ConfirmModalContent handleSubmit={handleSubmit} />
 				</BaseModal>
 			)}
-			<section className="w-full h-dvh flex items-center justify-center">
-				<div className="flex flex-col items-center">
-					<h1 className="text-6xl text-gray-600 mb-12">
-						{t('winwin_frontend_test_task')}
-					</h1>
-					<ActionButton
-						styles="min-w-[184px] bg-[#ff5f00] text-[#fff] hover:bg-[#da5102]"
-						title={t('open_modal')}
-						func={() => setIsFilterModalOpen(true)}
-					/>
-				</div>
+
+			<section className="w-full h-dvh flex items-center">
+				<Container>
+					<div className="flex flex-col items-center gap-[50px]">
+						<h1 className="text-6xl text-gray-600">
+							{t('winwin_frontend_test_task')}
+						</h1>
+						<ActionButton
+							styles="min-w-[184px] bg-[#ff5f00] text-[#fff] hover:bg-[#da5102]"
+							title={t('open_modal')}
+							func={() => setIsFilterModalOpen(true)}
+						/>
+					</div>
+				</Container>
 			</section>
+
+			{data && (
+				<section className="py-[40px]">
+					<Container>
+						<DataList data={getFilteredArray(data?.filterItems)} />
+					</Container>
+				</section>
+			)}
 		</div>
 	)
 }

@@ -2,10 +2,10 @@ export interface BaseModalProps {
 	children: React.ReactNode
 	styles: string
 	closeButtonStyles: string
-	setIsModalOpen: (a: boolean) => void
+	setIsModalOpen: (value: boolean) => void
 }
 
 export interface CloseButtonProps {
 	styles: string
-	setIsModalOpen: (a: boolean) => void
+	setIsModalOpen: (value: boolean) => void
 }

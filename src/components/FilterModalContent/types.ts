@@ -9,8 +9,8 @@ export interface CheckboxFilterGroup {
 	filter: CheckboxItemProps[]
 }
 
-export interface onChangeInterface {
-	setFilters: (filters: CheckboxFilterGroup[]) => void
+export type onChangeInterface = {
+	setFilters: React.Dispatch<React.SetStateAction<CheckboxFilterGroup[]>>
 }
 
 export interface CheckboxListProps {
