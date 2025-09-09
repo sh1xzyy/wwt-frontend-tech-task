@@ -4,13 +4,22 @@ import { useConfirmModalContext } from '@/context/useConfirmModalContext/useConf
 
 import ActionButtons from './parts/ActionButtons'
 import Title from './parts/Title'
+import { ConfirmModalContentProps } from './types'
 
-interface ConfirmModalContentProps {
-	handleSubmit: (e: FormEvent) => void
-}
-
-const ConfirmModalContent = ({ handleSubmit }: ConfirmModalContentProps) => {
+const ConfirmModalContent = ({
+	setFilters,
+	setIsFilterModalOpen,
+	filters
+}: ConfirmModalContentProps) => {
 	const { setIsConfirmModalOpen } = useConfirmModalContext()
+
+	const handleSubmit = async (e: FormEvent): Promise<void> => {
+		e.preventDefault()
+		localStorage.setItem('filters', JSON.stringify(filters))
+		setFilters(filters)
+		setIsConfirmModalOpen(false)
+		setIsFilterModalOpen(false)
+	}
 
 	return (
 		<form onSubmit={handleSubmit}>

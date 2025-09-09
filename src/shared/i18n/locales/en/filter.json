@@ -4,5 +4,6 @@
 	"apply": "Apply",
 	"clear_all_parameters": "Clear all parameters",
 	"winwin_frontend_test_task": "WinWinTravel frontend test task",
-	"apply_filters": "Do you want to apply new filter"
+	"apply_filters": "Do you want to apply new filter",
+	"filtered_data": "Filtered Data"
 }
