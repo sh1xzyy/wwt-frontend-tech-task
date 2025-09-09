@@ -19,14 +19,14 @@ const preliminaryFilters: CheckboxItemProps[] = [
 	{ label: '5 stars', name: 'preliminary-stars-5', checked: false },
 	{
 		label: 'Breakfast is included',
-		name: 'preliminary-breakfast',
+		name: 'breakfast',
 		checked: false
 	}
 ]
 
 const popularFilters: CheckboxItemProps[] = [
 	{ label: '5 stars', name: 'popular-stars-5', checked: false },
-	{ label: 'Breakfast is included', name: 'popular-breakfast', checked: false },
+	{ label: 'Breakfast is included', name: 'breakfast', checked: false },
 	{ label: 'Free booking', name: 'popular-free-booking', checked: false },
 	{ label: '4 stars', name: 'popular-stars-4', checked: false },
 	{
@@ -40,12 +40,12 @@ const popularFilters: CheckboxItemProps[] = [
 const accommodationFacility: CheckboxItemProps[] = [
 	{
 		label: 'Transfer to/from the hotel',
-		name: 'accommodation-transfer',
+		name: 'shuttle-service',
 		checked: false
 	},
 	{
 		label: 'Breakfast included',
-		name: 'accommodation-breakfast',
+		name: 'breakfast',
 		checked: false
 	},
 	{ label: 'Smoking area', name: 'accommodation-smoking', checked: false },
@@ -65,19 +65,19 @@ const accommodationFacility: CheckboxItemProps[] = [
 		name: 'accommodation-early-checkin',
 		checked: false
 	},
-	{ label: 'Swimming pool', name: 'accommodation-pool', checked: false },
-	{ label: 'Internet', name: 'accommodation-internet', checked: false },
+	{ label: 'Swimming pool', name: 'pool', checked: false },
+	{ label: 'Internet', name: 'wi-fi', checked: false },
 	{
 		label: 'Late check-in',
 		name: 'accommodation-late-checkin',
 		checked: false
 	},
-	{ label: 'Spa center/sauna', name: 'accommodation-spa', checked: false },
+	{ label: 'Spa center/sauna', name: 'spa', checked: false },
 	{ label: 'Security', name: 'accommodation-security', checked: false },
-	{ label: 'Pets are allowed', name: 'accommodation-pets', checked: false },
-	{ label: 'Gym/fitness room', name: 'accommodation-gym', checked: false },
+	{ label: 'Pets are allowed', name: 'pets-allowed', checked: false },
+	{ label: 'Gym/fitness room', name: 'gym', checked: false },
 	{ label: 'Lift', name: 'accommodation-lift', checked: false },
-	{ label: 'Parking', name: 'accommodation-parking', checked: false },
+	{ label: 'Parking', name: 'parking', checked: false },
 	{
 		label: 'Conference rooms',
 		name: 'accommodation-conference',
@@ -86,15 +86,14 @@ const accommodationFacility: CheckboxItemProps[] = [
 	{ label: 'Eco-responsibility', name: 'accommodation-eco', checked: false }
 ]
 
-// Остальные группы аналогично
 const amenitiesForPeopleWithDisabilities: CheckboxItemProps[] = [
 	{
 		label: 'Entrance without steps',
 		name: 'disabilities-entrance',
 		checked: false
 	},
-	{ label: 'Parking', name: 'disabilities-parking', checked: false },
-	{ label: 'Lift', name: 'disabilities-lift', checked: false },
+	{ label: 'Parking', name: 'parking', checked: false },
+	{ label: 'Lift', name: 'accommodation-lift', checked: false },
 	{
 		label: 'Entrance 81 cm wide',
 		name: 'disabilities-entrance-81',
@@ -111,15 +110,15 @@ const amenitiesForPeopleWithDisabilities: CheckboxItemProps[] = [
 const roomFacilities: CheckboxItemProps[] = [
 	{ label: 'Bath', name: 'room-bath', checked: false },
 	{ label: 'Kitchen', name: 'room-kitchen', checked: false },
-	{ label: 'Underfloor heating', name: 'room-heating', checked: false },
+	{ label: 'Underfloor heating', name: 'heating', checked: false },
 	{ label: 'Shower', name: 'room-shower', checked: false },
-	{ label: 'Air Conditioning', name: 'room-ac', checked: false },
-	{ label: 'Pets allowed', name: 'room-pets', checked: false },
-	{ label: 'Coffee machine', name: 'room-coffee', checked: false },
+	{ label: 'Air Conditioning', name: 'air-conditioning', checked: false },
+	{ label: 'Pets allowed', name: 'pets-allowed', checked: false },
+	{ label: 'Coffee machine', name: 'coffee-tea-maker', checked: false },
 	{ label: 'Iron', name: 'room-iron', checked: false },
 	{ label: 'Baby bed', name: 'room-baby-bed', checked: false },
 	{ label: 'Kettle', name: 'room-kettle', checked: false },
-	{ label: 'Internet', name: 'room-internet', checked: false },
+	{ label: 'Internet', name: 'wi-fi', checked: false },
 	{ label: 'Balcony', name: 'room-balcony', checked: false },
 	{ label: 'Fridge', name: 'room-fridge', checked: false },
 	{ label: 'Workplace', name: 'room-workplace', checked: false }
@@ -192,14 +191,14 @@ const nutrition: CheckboxItemProps[] = [
 	{ label: 'Room without meals', name: 'nutrition-no-meals', checked: false },
 	{
 		label: 'Breakfast and dinner',
-		name: 'nutrition-breakfast-dinner',
+		name: 'dinner',
 		checked: false
 	},
-	{ label: 'All inclusive', name: 'nutrition-all-inclusive', checked: false },
-	{ label: 'Breakfast included', name: 'nutrition-breakfast', checked: false },
+	{ label: 'All inclusive', name: 'all-inclusive', checked: false },
+	{ label: 'Breakfast included', name: 'breakfast', checked: false },
 	{
 		label: 'Breakfast, lunch, dinner',
-		name: 'nutrition-all-meals',
+		name: 'lunch',
 		checked: false
 	},
 	{
@@ -212,7 +211,7 @@ const nutrition: CheckboxItemProps[] = [
 const reservationCancellationPolicy: CheckboxItemProps[] = [
 	{
 		label: 'Free cancellation before check-in',
-		name: 'cancellation-free-before',
+		name: 'free-cancellation',
 		checked: false
 	},
 	{

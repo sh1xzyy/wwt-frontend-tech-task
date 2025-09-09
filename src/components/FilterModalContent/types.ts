@@ -10,6 +10,7 @@ export interface CheckboxFilterGroup {
 }
 
 export type onChangeInterface = {
+	filters: CheckboxFilterGroup[]
 	setFilters: React.Dispatch<React.SetStateAction<CheckboxFilterGroup[]>>
 }
 

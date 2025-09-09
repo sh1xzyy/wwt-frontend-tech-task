@@ -1,10 +1,8 @@
 import ActionButton from '../../../components/common/ActionButton/ActionButton'
+import { useModalStore } from '../../../store/useModalStore'
 
-const ActionButtons = ({
-	setIsConfirmModalOpen
-}: {
-	setIsConfirmModalOpen: (value: boolean) => void
-}) => {
+const ActionButtons = () => {
+	const { setIsConfirmModalOpen } = useModalStore()
 	return (
 		<div className="flex gap-[32px]">
 			<ActionButton

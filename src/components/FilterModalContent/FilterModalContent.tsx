@@ -1,22 +1,18 @@
 import { useTranslation } from 'react-i18next'
 
-import { useConfirmModalContext } from '@/context/useConfirmModalContext/useConfirmModalContext'
 import { globalFilter } from '@/filtersData/filters'
-import { useCheckedFilters } from '@/hooks/useCheckedFilters'
-import { useFilterSelection } from '@/hooks/useFilterSelection'
 
 import ActionButton from '../../components/common/ActionButton/ActionButton'
+import { useModalStore } from '../../store/useModalStore'
 import { handleCheckboxChange } from '../../utils/filterModalContent/handleCheckboxChange'
 import { handleClearAll } from '../../utils/filterModalContent/handleClearAll'
 import CheckboxGroup from './parts/CheckboxGroup/CheckboxGroup'
 import Title from './parts/Title'
 import { onChangeInterface } from './types'
 
-const FilterModalContent = ({ setFilters }: onChangeInterface) => {
-	const { setIsConfirmModalOpen } = useConfirmModalContext()
-	const { selectedFilters, setSelectedFilters } = useFilterSelection()
+const FilterModalContent = ({ filters, setFilters }: onChangeInterface) => {
+	const { setIsConfirmModalOpen } = useModalStore()
 	const { t } = useTranslation()
-	useCheckedFilters(selectedFilters, setFilters)
 
 	return (
 		<>
@@ -25,17 +21,12 @@ const FilterModalContent = ({ setFilters }: onChangeInterface) => {
 			<div className="w-full">
 				<div className="mb-[32px]">
 					<ul className="flex flex-col">
-						{selectedFilters.map((data, index) => (
+						{filters.map((data, index) => (
 							<CheckboxGroup
 								key={index}
 								data={{ ...data, index }}
 								onChange={(itemIndex: number, value: boolean) =>
-									handleCheckboxChange(
-										setSelectedFilters,
-										index,
-										itemIndex,
-										value
-									)
+									handleCheckboxChange(setFilters, index, itemIndex, value)
 								}
 							/>
 						))}
@@ -52,9 +43,7 @@ const FilterModalContent = ({ setFilters }: onChangeInterface) => {
 			<button
 				className="absolute bottom-[70px] right-[39px] font-medium underline text-[#078691] transition linear duration-[250ms] hover:text-[#046f79]"
 				type="button"
-				onClick={() =>
-					handleClearAll(setSelectedFilters, setFilters, globalFilter)
-				}
+				onClick={() => handleClearAll(setFilters, globalFilter)}
 			>
 				{t('clear_all_parameters')}
 			</button>

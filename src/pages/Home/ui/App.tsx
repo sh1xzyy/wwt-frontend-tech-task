@@ -1,35 +1,31 @@
-import { FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import clsx from 'clsx'
 
-import { useConfirmModalContext } from '@/context/useConfirmModalContext/useConfirmModalContext'
-import { globalFilter } from '@/filtersData/filters'
+import { useFilterSelection } from '@/hooks/useFilterSelection'
+import { useFiltersData } from '@/hooks/useFiltersData'
 import { useFiltersQuery } from '@/hooks/useFiltersQuery'
 
 import ConfirmModalContent from '../../../components/ConfirmModalContent/ConfirmModalContent'
 import DataList from '../../../components/DataList/DataList'
 import FilterModalContent from '../../../components/FilterModalContent/FilterModalContent'
-import { CheckboxFilterGroup } from '../../../components/FilterModalContent/types'
 import ActionButton from '../../../components/common/ActionButton/ActionButton'
 import BaseModal from '../../../components/common/BaseModal/BaseModal'
 import Container from '../../../components/common/Container/Container'
 import Loader from '../../../components/common/Loader/Loader'
-import { getFilteredArray } from '../../../utils/app/getFilteredArray'
+import { useModalStore } from '../../../store/useModalStore'
 
 export const App = () => {
-	const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false)
-	const { isConfirmModalOpen, setIsConfirmModalOpen } = useConfirmModalContext()
-	const [filters, setFilters] = useState<CheckboxFilterGroup[]>(globalFilter)
+	const {
+		isFilterModalOpen,
+		setIsFilterModalOpen,
+		isConfirmModalOpen,
+		setIsConfirmModalOpen
+	} = useModalStore()
+	const { filters, setFilters } = useFilterSelection()
 	const { data, isLoading } = useFiltersQuery()
+	const { list } = useFiltersData(data, filters)
 	const { t } = useTranslation()
-
-	const handleSubmit = async (e: FormEvent): Promise<void> => {
-		e.preventDefault()
-		localStorage.setItem('filters', JSON.stringify(filters))
-		setIsConfirmModalOpen(false)
-		setIsFilterModalOpen(false)
-	}
 
 	if (isLoading) {
 		return <Loader />
@@ -47,7 +43,10 @@ export const App = () => {
 					closeButtonStyles="top-[52px]"
 					setIsModalOpen={setIsFilterModalOpen}
 				>
-					<FilterModalContent setFilters={setFilters} />
+					<FilterModalContent
+						filters={filters}
+						setFilters={setFilters}
+					/>
 				</BaseModal>
 			)}
 
@@ -57,7 +56,10 @@ export const App = () => {
 					closeButtonStyles="top-[44px]"
 					setIsModalOpen={setIsConfirmModalOpen}
 				>
-					<ConfirmModalContent handleSubmit={handleSubmit} />
+					<ConfirmModalContent
+						setFilters={setFilters}
+						filters={filters}
+					/>
 				</BaseModal>
 			)}
 
@@ -76,13 +78,14 @@ export const App = () => {
 				</Container>
 			</section>
 
-			{data && (
-				<section className="py-[40px]">
-					<Container>
-						<DataList data={getFilteredArray(data?.filterItems)} />
-					</Container>
-				</section>
-			)}
+			<section className="py-[40px]">
+				<Container>
+					<h2 className="font-bold text-[32px] text-[#31393c] mb-[25px]">
+						{t('filtered_data')}
+					</h2>
+					{data && <DataList data={list} />}
+				</Container>
+			</section>
 		</div>
 	)
 }
