@@ -1,17 +1,15 @@
 import { FormEvent } from 'react'
 
-import { useConfirmModalContext } from '@/context/useConfirmModalContext/useConfirmModalContext'
-
+import { useModalStore } from '../../store/useModalStore'
 import ActionButtons from './parts/ActionButtons'
 import Title from './parts/Title'
 import { ConfirmModalContentProps } from './types'
 
 const ConfirmModalContent = ({
 	setFilters,
-	setIsFilterModalOpen,
 	filters
 }: ConfirmModalContentProps) => {
-	const { setIsConfirmModalOpen } = useConfirmModalContext()
+	const { setIsFilterModalOpen, setIsConfirmModalOpen } = useModalStore()
 
 	const handleSubmit = async (e: FormEvent): Promise<void> => {
 		e.preventDefault()
@@ -25,7 +23,7 @@ const ConfirmModalContent = ({
 		<form onSubmit={handleSubmit}>
 			<div className="flex flex-col gap-[120px]">
 				<Title />
-				<ActionButtons setIsConfirmModalOpen={setIsConfirmModalOpen} />
+				<ActionButtons />
 			</div>
 		</form>
 	)

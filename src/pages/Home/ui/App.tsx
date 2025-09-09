@@ -1,9 +1,7 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import clsx from 'clsx'
 
-import { useConfirmModalContext } from '@/context/useConfirmModalContext/useConfirmModalContext'
 import { useFilterSelection } from '@/hooks/useFilterSelection'
 import { useFiltersData } from '@/hooks/useFiltersData'
 import { useFiltersQuery } from '@/hooks/useFiltersQuery'
@@ -15,10 +13,15 @@ import ActionButton from '../../../components/common/ActionButton/ActionButton'
 import BaseModal from '../../../components/common/BaseModal/BaseModal'
 import Container from '../../../components/common/Container/Container'
 import Loader from '../../../components/common/Loader/Loader'
+import { useModalStore } from '../../../store/useModalStore'
 
 export const App = () => {
-	const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false)
-	const { isConfirmModalOpen, setIsConfirmModalOpen } = useConfirmModalContext()
+	const {
+		isFilterModalOpen,
+		setIsFilterModalOpen,
+		isConfirmModalOpen,
+		setIsConfirmModalOpen
+	} = useModalStore()
 	const { filters, setFilters } = useFilterSelection()
 	const { data, isLoading } = useFiltersQuery()
 	const { list } = useFiltersData(data, filters)
@@ -55,7 +58,6 @@ export const App = () => {
 				>
 					<ConfirmModalContent
 						setFilters={setFilters}
-						setIsFilterModalOpen={setIsFilterModalOpen}
 						filters={filters}
 					/>
 				</BaseModal>

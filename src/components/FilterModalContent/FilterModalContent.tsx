@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 
-import { useConfirmModalContext } from '@/context/useConfirmModalContext/useConfirmModalContext'
 import { globalFilter } from '@/filtersData/filters'
 
 import ActionButton from '../../components/common/ActionButton/ActionButton'
+import { useModalStore } from '../../store/useModalStore'
 import { handleCheckboxChange } from '../../utils/filterModalContent/handleCheckboxChange'
 import { handleClearAll } from '../../utils/filterModalContent/handleClearAll'
 import CheckboxGroup from './parts/CheckboxGroup/CheckboxGroup'
@@ -11,7 +11,7 @@ import Title from './parts/Title'
 import { onChangeInterface } from './types'
 
 const FilterModalContent = ({ filters, setFilters }: onChangeInterface) => {
-	const { setIsConfirmModalOpen } = useConfirmModalContext()
+	const { setIsConfirmModalOpen } = useModalStore()
 	const { t } = useTranslation()
 
 	return (
