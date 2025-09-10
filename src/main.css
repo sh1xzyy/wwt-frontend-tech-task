@@ -63,4 +63,30 @@
 		clip: rect(0 0 0 0);
 		overflow: hidden;
 	}
+
+	.animate-open-modal {
+		animation: animation-open-modal 0.35s linear;
+	}
+
+	.animate-close-modal {
+		animation: animation-close-modal 0.35s linear;
+	}
+
+	@keyframes animation-open-modal {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@keyframes animation-close-modal {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
 }

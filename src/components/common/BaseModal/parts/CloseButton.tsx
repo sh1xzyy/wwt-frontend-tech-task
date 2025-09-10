@@ -2,12 +2,14 @@ import clsx from 'clsx'
 
 import { CloseButtonProps } from '../types'
 
-const CloseButton = ({ setIsModalOpen, styles }: CloseButtonProps) => {
+const CloseButton = ({ styles, setIsClosing }: CloseButtonProps) => {
 	return (
 		<button
 			className={clsx('absolute right-[33px]', styles)}
 			type="button"
-			onClick={() => setIsModalOpen(false)}
+			onClick={() => {
+				setIsClosing(true)
+			}}
 			aria-label="close modal button"
 		>
 			<svg

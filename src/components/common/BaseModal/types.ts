@@ -7,5 +7,5 @@ export interface BaseModalProps {
 
 export interface CloseButtonProps {
 	styles: string
-	setIsModalOpen: (value: boolean) => void
+	setIsClosing: (value: boolean) => void
 }
