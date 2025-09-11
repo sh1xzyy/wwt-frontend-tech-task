@@ -32,7 +32,7 @@ const BaseModal = ({
 		>
 			<div
 				className={clsx(
-					'relative flex flex-col items-center h-[fit-content] rounded-2xl text-[#31393c] bg-[#fff] w-full max-w-[1280px] border border-[#000]',
+					'relative flex flex-col items-center h-[fit-content] rounded-2xl text-[#31393c] bg-[#fff] w-full max-w-[1280px]',
 					isClosing ? 'animate-close-modal' : 'animate-open-modal',
 					styles
 				)}
